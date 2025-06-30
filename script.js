@@ -2,7 +2,7 @@
         function toggleTheme() {
             const body = document.body;
             const themeToggle = document.querySelector('.theme-toggle');
-            
+
             if (body.getAttribute('data-theme') === 'dark') {
                 body.removeAttribute('data-theme');
                 themeToggle.textContent = '🌙';
@@ -17,16 +17,33 @@
             const sections = document.querySelectorAll('.section');
             sections.forEach(section => section.classList.remove('active'));
             document.getElementById(sectionId).classList.add('active');
-            
-            // Hide all tools
+
+            // If showing tools section, show all tools grid
+            if (sectionId === 'tools') {
+                showAllTools();
+            }
+        }
+
+        function showAllTools() {
+            // Hide all individual tools
             const tools = document.querySelectorAll('.tool-interface');
             tools.forEach(tool => tool.classList.add('hidden'));
+
+            // Show tools grid
+            document.getElementById('toolsGrid').style.display = 'grid';
+            document.getElementById('backToTools').style.display = 'none';
         }
 
         function showTool(toolId) {
-            showSection('tools');
+            // Hide tools grid
+            document.getElementById('toolsGrid').style.display = 'none';
+            document.getElementById('backToTools').style.display = 'block';
+
+            // Hide all tools first
             const tools = document.querySelectorAll('.tool-interface');
             tools.forEach(tool => tool.classList.add('hidden'));
+
+            // Show selected tool
             document.getElementById(toolId).classList.remove('hidden');
         }
 
@@ -43,7 +60,7 @@
 
         function textToTitleCase() {
             const text = document.getElementById('textInput').value;
-            const titleCase = text.replace(/\w\S*/g, (txt) => 
+            const titleCase = text.replace(/\w\S*/g, (txt) =>
                 txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
             );
             document.getElementById('textResult').textContent = titleCase;
@@ -53,7 +70,7 @@
             const text = document.getElementById('textInput').value;
             const wordCount = text.trim().split(/\s+/).filter(word => word.length > 0).length;
             const charCount = text.length;
-            document.getElementById('textResult').innerHTML = 
+            document.getElementById('textResult').innerHTML =
                 `Words: ${wordCount}<br>Characters: ${charCount}<br>Characters (no spaces): ${text.replace(/\s/g, '').length}`;
         }
 
@@ -100,7 +117,7 @@
 
         // Color Tools
         function generateRandomColor() {
-            const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+            const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
             document.getElementById('colorPicker').value = randomColor;
             document.getElementById('hexInput').value = randomColor;
             convertColor();
@@ -108,13 +125,13 @@
 
         function convertColor() {
             const hex = document.getElementById('hexInput').value || document.getElementById('colorPicker').value;
-            const r = parseInt(hex.substr(1,2), 16);
-            const g = parseInt(hex.substr(3,2), 16);
-            const b = parseInt(hex.substr(5,2), 16);
-            
+            const r = parseInt(hex.substr(1, 2), 16);
+            const g = parseInt(hex.substr(3, 2), 16);
+            const b = parseInt(hex.substr(5, 2), 16);
+
             const rgb = `rgb(${r}, ${g}, ${b})`;
             const hsl = rgbToHsl(r, g, b);
-            
+
             document.getElementById('colorResult').innerHTML = `
                 <div style="background: ${hex}; width: 100px; height: 100px; border-radius: 10px; margin: 10px auto;"></div>
                 <p><strong>HEX:</strong> ${hex}</p>
@@ -150,19 +167,19 @@
         function generatePalette() {
             const baseColor = document.getElementById('colorPicker').value;
             const colors = [baseColor];
-            
+
             for (let i = 1; i < 5; i++) {
                 const hue = (parseInt(baseColor.substr(1), 16) + i * 60) % 360;
                 const newColor = '#' + hue.toString(16).padStart(6, '0');
                 colors.push(newColor);
             }
-            
+
             let paletteHTML = '<div style="display: flex; gap: 10px; justify-content: center;">';
             colors.forEach(color => {
                 paletteHTML += `<div style="background: ${color}; width: 60px; height: 60px; border-radius: 5px; display: flex; align-items: end; justify-content: center; font-size: 10px; color: white; text-shadow: 1px 1px 1px black;">${color}</div>`;
             });
             paletteHTML += '</div>';
-            
+
             document.getElementById('colorResult').innerHTML = paletteHTML;
         }
 
@@ -171,12 +188,12 @@
             const value = parseFloat(document.getElementById('unitInput').value);
             const fromUnit = document.getElementById('fromUnit').value;
             const toUnit = document.getElementById('toUnit').value;
-            
+
             if (isNaN(value)) {
                 document.getElementById('unitResult').textContent = 'Please enter a valid number';
                 return;
             }
-            
+
             const conversions = {
                 length: {
                     meter: 1,
@@ -193,33 +210,33 @@
                 },
                 temperature: {
                     celsius: (val, to) => {
-                        if (to === 'fahrenheit') return (val * 9/5) + 32;
+                        if (to === 'fahrenheit') return (val * 9 / 5) + 32;
                         if (to === 'kelvin') return val + 273.15;
                         return val;
                     },
                     fahrenheit: (val, to) => {
-                        if (to === 'celsius') return (val - 32) * 5/9;
-                        if (to === 'kelvin') return (val - 32) * 5/9 + 273.15;
+                        if (to === 'celsius') return (val - 32) * 5 / 9;
+                        if (to === 'kelvin') return (val - 32) * 5 / 9 + 273.15;
                         return val;
                     },
                     kelvin: (val, to) => {
                         if (to === 'celsius') return val - 273.15;
-                        if (to === 'fahrenheit') return (val - 273.15) * 9/5 + 32;
+                        if (to === 'fahrenheit') return (val - 273.15) * 9 / 5 + 32;
                         return val;
                     }
                 }
             };
-            
+
             const unitType = document.getElementById('unitType').value;
             let result;
-            
+
             if (unitType === 'temperature') {
                 result = conversions[unitType][fromUnit](value, toUnit);
             } else {
                 const baseValue = value / conversions[unitType][fromUnit];
                 result = baseValue * conversions[unitType][toUnit];
             }
-            
+
             document.getElementById('unitResult').textContent = `${value} ${fromUnit} = ${result.toFixed(4)} ${toUnit}`;
         }
 
@@ -230,7 +247,7 @@
                 document.getElementById('qrResult').textContent = 'Please enter text or URL';
                 return;
             }
-            
+
             // Simple QR code using API
             const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(text)}`;
             document.getElementById('qrResult').innerHTML = `
@@ -248,23 +265,23 @@
             const includeLowercase = document.getElementById('includeLowercase').checked;
             const includeNumbers = document.getElementById('includeNumbers').checked;
             const includeSymbols = document.getElementById('includeSymbols').checked;
-            
+
             let charset = '';
             if (includeUppercase) charset += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
             if (includeLowercase) charset += 'abcdefghijklmnopqrstuvwxyz';
             if (includeNumbers) charset += '0123456789';
             if (includeSymbols) charset += '!@#$%^&*()_+-=[]{}|;:,.<>?';
-            
+
             if (charset === '') {
                 document.getElementById('passwordResult').textContent = 'Please select at least one character type';
                 return;
             }
-            
+
             let password = '';
             for (let i = 0; i < length; i++) {
                 password += charset.charAt(Math.floor(Math.random() * charset.length));
             }
-            
+
             document.getElementById('passwordResult').innerHTML = `
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <input type="text" value="${password}" readonly style="flex: 1; font-family: monospace; font-size: 14px;">
@@ -282,7 +299,7 @@
             if (/[A-Z]/.test(password)) score++;
             if (/[0-9]/.test(password)) score++;
             if (/[^A-Za-z0-9]/.test(password)) score++;
-            
+
             if (score < 3) return 'Weak';
             if (score < 5) return 'Medium';
             return 'Strong';
@@ -293,12 +310,120 @@
                 alert('Password copied to clipboard!');
             });
         }
+        // Number to Words
+        function convertNumberToWords() {
+            const num = parseInt(document.getElementById('numberInput').value);
+            if (isNaN(num)) {
+                document.getElementById('numberWordsResult').textContent = 'Please enter a valid number';
+                return;
+            }
+            fetch(`https://api.funtranslations.com/translate/numbers.json?text=${num}`)
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('numberWordsResult').textContent = data.contents.translated;
+                })
+                .catch(() => {
+                    document.getElementById('numberWordsResult').textContent = 'Sorry, failed to convert';
+                });
+        }
+
+
+        // Text Encryptor / Decryptor
+        function encryptText() {
+            const text = document.getElementById('encryptInput').value;
+            const encrypted = btoa(text);
+            document.getElementById('encryptResult').textContent = `Encrypted: ${encrypted}`;
+        }
+
+        function decryptText() {
+            const text = document.getElementById('encryptInput').value;
+            try {
+                const decrypted = atob(text);
+                document.getElementById('encryptResult').textContent = `Decrypted: ${decrypted}`;
+            } catch {
+                document.getElementById('encryptResult').textContent = 'Invalid base64 string';
+            }
+        }
+
+        // JSON Formatter
+        function formatJSON() {
+            const jsonText = document.getElementById('jsonInput').value;
+            try {
+                const obj = JSON.parse(jsonText);
+                const pretty = JSON.stringify(obj, null, 4);
+                document.getElementById('jsonResult').textContent = pretty;
+            } catch {
+                document.getElementById('jsonResult').textContent = 'Invalid JSON';
+            }
+        }
+        function convertBinary() {
+            const input = document.getElementById('binaryInput').value.trim();
+            const type = document.getElementById('binaryType').value;
+            let result = '';
+
+            if (type === 'bin2dec') {
+                if (/^[01]+$/.test(input)) {
+                    result = parseInt(input, 2);
+                } else {
+                    result = 'Invalid binary number';
+                }
+            } else {
+                const num = parseInt(input);
+                if (!isNaN(num)) {
+                    result = num.toString(2);
+                } else {
+                    result = 'Invalid decimal number';
+                }
+            }
+
+            document.getElementById('binaryResult').textContent = result;
+        }
+        function calculateAge() {
+            const dob = new Date(document.getElementById('dob').value);
+            if (!dob.getTime()) {
+                document.getElementById('ageResult').textContent = 'Invalid date';
+                return;
+            }
+
+            const today = new Date();
+            let age = today.getFullYear() - dob.getFullYear();
+            const m = today.getMonth() - dob.getMonth();
+
+            if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+                age--;
+            }
+
+            document.getElementById('ageResult').textContent = `You are ${age} years old.`;
+        }
+        function calculateDays() {
+            const d1 = new Date(document.getElementById('date1').value);
+            const d2 = new Date(document.getElementById('date2').value);
+            if (!d1.getTime() || !d2.getTime()) {
+                document.getElementById('daysResult').textContent = 'Invalid dates';
+                return;
+            }
+
+            const diff = Math.abs(d2 - d1);
+            const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+            document.getElementById('daysResult').textContent = `${days} day(s) difference.`;
+        }
+        function sortAlphabetically() {
+            const input = document.getElementById('sortInput').value;
+            const words = input.split(',').map(w => w.trim()).filter(w => w.length > 0);
+            const sorted = words.sort((a, b) => a.localeCompare(b));
+            document.getElementById('sortResult').textContent = sorted.join(', ');
+        }
+        function countLines() {
+            const input = document.getElementById('lineInput').value;
+            const lines = input.split('\n').filter(line => line.trim() !== '');
+            document.getElementById('lineResult').textContent = `Total lines: ${lines.length}`;
+        }
 
         // FAQ Toggle
         function toggleFAQ(element) {
             const answer = element.nextElementSibling;
             const icon = element.querySelector('span:last-child');
-            
+
             if (answer.classList.contains('open')) {
                 answer.classList.remove('open');
                 icon.textContent = '+';
@@ -310,21 +435,53 @@
 
         // Contact Form
         function sendMessage() {
-            alert('Thank you for your message! We will get back to you soon.');
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const subject = document.getElementById('contactSubject').value;
+            const message = document.getElementById('contactMessage').value;
+
+            if (!name || !email || !subject || !message) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+
+            // Simulate form submission
+            alert(`Thank you ${name}! Your message has been sent successfully. We'll get back to you soon at ${email}.`);
+
+            // Reset form
+            document.getElementById('contactForm').reset();
         }
 
+        // Contact form submission handler
+        document.addEventListener('DOMContentLoaded', function () {
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    sendMessage();
+                });
+            }
+        });
+
         // Update password length display
-        document.getElementById('passwordLength').addEventListener('input', function() {
+        document.getElementById('passwordLength').addEventListener('input', function () {
             document.getElementById('lengthDisplay').textContent = this.value;
         });
 
         // Color picker and hex input sync
-        document.getElementById('colorPicker').addEventListener('change', function() {
+        document.getElementById('colorPicker').addEventListener('change', function () {
             document.getElementById('hexInput').value = this.value;
             convertColor();
         });
 
-        document.getElementById('hexInput').addEventListener('input', function() {
+        document.getElementById('hexInput').addEventListener('input', function () {
             if (this.value.match(/^#[0-9A-F]{6}$/i)) {
                 document.getElementById('colorPicker').value = this.value;
                 convertColor();
@@ -332,11 +489,11 @@
         });
 
         // Unit type change handler
-        document.getElementById('unitType').addEventListener('change', function() {
+        document.getElementById('unitType').addEventListener('change', function () {
             const unitType = this.value;
             const fromUnit = document.getElementById('fromUnit');
             const toUnit = document.getElementById('toUnit');
-            
+
             let options = '';
             if (unitType === 'length') {
                 options = `
@@ -360,13 +517,13 @@
                     <option value="kelvin">Kelvin</option>
                 `;
             }
-            
+
             fromUnit.innerHTML = options;
             toUnit.innerHTML = options;
         });
 
         // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Set default theme
             if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                 document.body.setAttribute('data-theme', 'dark');
