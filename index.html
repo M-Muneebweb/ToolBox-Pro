@@ -7,7 +7,7 @@
     <title>ToolBox Pro - Your Ultimate Toolkit</title>
     <link rel="icon" type="image/x-icon"
         href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzMzNzNkYyIvPgo8cGF0aCBkPSJNMTAuNSAxMC41SDIxLjVWMTMuNUgxMC41VjEwLjVaTTEwLjUgMTUuNUgyMS41VjE4LjVIMTAuNVYxNS41Wk0xMC41IDIwLjVIMTguNVYyMy41SDEwLjVWMjAuNVoiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=">
-   <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -25,7 +25,12 @@
         </div>
     </nav>
 
+
     <main>
+        <div class="container" style="margin-top: 100px; text-align: center;">
+            <input type="text" id="toolSearch" placeholder="Search for a tool..."
+                style="padding: 10px; width: 80%; max-width: 400px; border-radius: 10px; border: 1px solid var(--border-color); font-size: 16px;">
+        </div>
         <!-- Home Section -->
         <section id="home" class="section active">
             <div class="container">
@@ -35,6 +40,18 @@
                 </div>
 
                 <div class="tools-grid" id="tools-grid">
+                    <!-- Countdown Timer Card -->
+                    <div class="tool-card" onclick="showTool('countdownTimerTool')">
+                        <h3>⏳ Countdown Timer</h3>
+                        <p>Set a future date and track the time left.</p>
+                    </div>
+
+                    <!-- Tip Calculator Card -->
+                    <div class="tool-card" onclick="showTool('tipCalculatorTool')">
+                        <h3>💰 Tip Calculator</h3>
+                        <p>Calculate tips and split the bill easily.</p>
+                    </div>
+
                     <div class="tool-card" onclick="showTool('days-difference')">
                         <h3>📅 Date Difference</h3>
                         <p>Date Calculator between two difference dates.</p>
@@ -92,6 +109,27 @@
                         <h3>🗂️ JSON Formatter</h3>
                         <p>Beautify or validate your JSON data.</p>
                     </div>
+                    <div class="tools-grid">
+
+                        <!-- Roman Numeral Converter Card -->
+                        <div class="tool-card" onclick="showTool('roman-converter')">
+                            <h3>🔢 Roman Converter</h3>
+                            <p>Convert numbers to Roman numerals.</p>
+                        </div>
+
+                        <!-- Palindrome Checker Card -->
+                        <div class="tool-card" onclick="showTool('palindrome-checker')">
+                            <h3>🔁 Palindrome Checker</h3>
+                            <p>Check if a word or phrase is a palindrome.</p>
+                        </div>
+
+                        <!-- Typing Test Card -->
+                        <div class="tool-card" onclick="showTool('typing-test')">
+                            <h3>⌨️ Typing Speed Test</h3>
+                            <p>Test your typing speed and accuracy.</p>
+                        </div>
+                    </div>
+
 
                 </div>
             </div>
@@ -104,6 +142,18 @@
 
                 <!-- Tools Selection Grid -->
                 <div class="tools-grid" id="toolsGrid">
+                    <!-- Countdown Timer Card -->
+                    <div class="tool-card" onclick="showTool('countdownTimerTool')">
+                        <h3>⏳ Countdown Timer</h3>
+                        <p>Set a future date and track the time left.</p>
+                    </div>
+
+                    <!-- Tip Calculator Card -->
+                    <div class="tool-card" onclick="showTool('tipCalculatorTool')">
+                        <h3>💰 Tip Calculator</h3>
+                        <p>Calculate tips and split the bill easily.</p>
+                    </div>
+
                     <div class="tool-card" onclick="showTool('days-difference')">
                         <h3>📅 Date Difference</h3>
                         <p>Date Calculator between two difference dates.</p>
@@ -160,6 +210,26 @@
                         <h3>🔐 Password Generator</h3>
                         <p>Generate secure passwords with custom options</p>
                     </div>
+                    <div class="tools-grid">
+                        <!-- Roman Numeral Converter Card -->
+                        <div class="tool-card" onclick="showTool('roman-converter')">
+                            <h3>🔢 Roman Converter</h3>
+                            <p>Convert numbers to Roman numerals.</p>
+                        </div>
+
+                        <!-- Palindrome Checker Card -->
+                        <div class="tool-card" onclick="showTool('palindrome-checker')">
+                            <h3>🔁 Palindrome Checker</h3>
+                            <p>Check if a word or phrase is a palindrome.</p>
+                        </div>
+
+                        <!-- Typing Test Card -->
+                        <div class="tool-card" onclick="showTool('typing-test')">
+                            <h3>⌨️ Typing Speed Test</h3>
+                            <p>Test your typing speed and accuracy.</p>
+                        </div>
+                    </div>
+
                 </div>
 
                 <!-- Back to Tools Button -->
@@ -355,6 +425,52 @@
                     <button onclick="countLines()">Count Lines</button>
                     <div id="lineResult" class="result-box"></div>
                 </div>
+                <div class="tool-interface hidden" id="roman-converter">
+                    <h3 class="text-center mb-2">Number to Roman Numeral Converter</h3>
+                    <input type="number" id="romanInput" placeholder="Enter a number (1 - 3999)" min="1" max="3999">
+                    <button onclick="convertToRoman()">Convert</button>
+                    <div id="romanResult" class="mt-1"></div>
+                </div>
+
+                <div class="tool-interface hidden" id="palindrome-checker">
+                    <h3 class="text-center mb-2">Palindrome Checker</h3>
+                    <input type="text" id="palindromeInput" placeholder="Enter text">
+                    <button onclick="checkPalindrome()">Check</button>
+                    <div id="palindromeResult" class="mt-1"></div>
+                </div>
+
+
+                <div class="tool-interface hidden" id="typing-test">
+                    <h3 class="text-center mb-2">Typing Speed Tester</h3>
+                    <p>Start typing this ↓↓↓ sentence to check your speed.</p>
+                    <p id="typingText">Your ultimate collection of useful online tools. All tools are free to use and
+                        work directly in your browser.</p>
+                    <textarea id="typingInput" rows="4" placeholder="Start typing here..."
+                        oninput="checkTypingSpeed()"></textarea>
+                    <button onclick="restartTypingTest()"
+                        style="margin-top: 1rem; display: block; margin-left: auto; margin-right: auto;">
+                        🔁 Restart Test
+                    </button>
+
+                    <div id="typingResult" class="mt-1"></div>
+                </div>
+                <div id="countdownTimerTool" class="tool-interface hidden">
+                    <h2>⏳ Countdown Timer</h2>
+                    <p>Select a future date and time:</p>
+                    <input type="datetime-local" id="countdownInput">
+                    <button onclick="startCountdown()">Start Countdown</button>
+                    <p id="countdownOutput" style="margin-top: 1rem; font-size: 1.2rem;"></p>
+                    <button onclick="resetCountdown()">🔁 Restart</button>
+                </div>
+                <div id="tipCalculatorTool" class="tool-interface hidden">
+                    <h2>💰 Tip Calculator</h2>
+                    <input type="number" id="bill" placeholder="Bill Amount (e.g., 500)" />
+                    <input type="number" id="tip" placeholder="Tip % (e.g., 10)" />
+                    <input type="number" id="people" placeholder="No. of People (e.g., 2)" />
+                    <button onclick="calculateTip()">Calculate</button>
+                    <p id="tipResult" style="margin-top: 1rem; font-weight: bold;"></p>
+                </div>
+
 
 
                 <!-- New Tool Interfaces End Here -->
@@ -387,20 +503,18 @@
                     <div class="contact-card">
                         <div class="icon">📧</div>
                         <h3>Email</h3>
-                        <p>support@toolboxpro.com</p>
-                        <p>info@toolboxpro.com</p>
+                        <p>muneebrashidhome@gmail.com</p>
                     </div>
                     <div class="contact-card">
                         <div class="icon">📱</div>
                         <h3>Phone</h3>
-                        <p>+1 (555) 123-4567</p>
-                        <p>+1 (555) 987-6543</p>
+                        <p>03133258330</p>
                     </div>
                     <div class="contact-card">
                         <div class="icon">📍</div>
                         <h3>Address</h3>
-                        <p>123 Tech Street</p>
-                        <p>Digital City, DC 12345</p>
+                        <p>Pakistan</p>
+                        <p>Sindh,Hyderabad,Latifabad</p>
                     </div>
                     <div class="contact-card">
                         <div class="icon">🕒</div>
