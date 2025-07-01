@@ -178,10 +178,12 @@ main {
 
 /* Tools Grid */
 .tools-grid {
-  display: flex;
+  display: grid;
   flex-wrap: wrap;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   justify-content: center; /* center me layega aakhri row */
-  gap: 2rem;
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
 .tool-card {
