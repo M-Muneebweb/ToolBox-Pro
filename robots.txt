@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://m-muneebweb.github.io/ToolBox-Pro/sitemap.xml
