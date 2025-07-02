@@ -13,43 +13,82 @@ function toggleTheme() {
 }
 
 // Navigation
+// script.js
+
 function showSection(sectionId) {
-	const sections = document.querySelectorAll('.section');
-	sections.forEach(section => section.classList.remove('active'));
-	document.getElementById(sectionId).classList.add('active');
+	showLoading(); // spinner on
 
-	if (sectionId === 'tools') {
-		showAllTools();
-		setTimeout(() => {
-			const searchBox = document.getElementById('toolSearch');
-			if (searchBox) searchBox.focus();
-		}, 100);
-	}
+	setTimeout(() => {
+		// Hide all sections
+		document.querySelectorAll('.section').forEach(section => {
+			section.classList.remove('active');
+		});
 
+		// Show target section
+		const target = document.getElementById(sectionId);
+		target.classList.add('active');
+		target.classList.add('fade-in');
+
+		// tools-grid move
+		const mainToolsGrid = document.getElementById('tools-grid');
+		if (sectionId === 'tools') {
+			const toolsContainer = document.querySelector('#tools .container');
+			toolsContainer.insertBefore(mainToolsGrid, toolsContainer.firstChild);
+		} else if (sectionId === 'home') {
+			const homeContainer = document.querySelector('#home .container');
+			homeContainer.insertBefore(mainToolsGrid, document.querySelector('#home .hero').nextSibling);
+		}
+
+		hideLoading(); // spinner off
+	}, 800);
 }
+
 
 function showAllTools() {
-	// Hide all individual tools
-	const tools = document.querySelectorAll('.tool-interface');
-	tools.forEach(tool => tool.classList.add('hidden'));
+	showLoading();
 
-	// Show tools grid
-	document.getElementById('toolsGrid').style.display = 'grid';
-	document.getElementById('backToTools').style.display = 'none';
+	setTimeout(() => {
+		const tools = document.querySelectorAll('.tool-interface');
+		tools.forEach(tool => tool.classList.add('hidden'));
+
+		const grid = document.getElementById('tools-grid');
+		grid.style.display = 'grid';
+		grid.classList.add('fade-in');
+
+		document.getElementById('backToTools').style.display = 'none';
+
+		hideLoading();
+	}, 1000);
 }
+
+
 
 function showTool(toolId) {
-	// Hide tools grid
-	document.getElementById('toolsGrid').style.display = 'none';
-	document.getElementById('backToTools').style.display = 'block';
+	const isHome = document.getElementById('home').classList.contains('active');
+	if (isHome) {
+		showToolMessage("To use this tool, please go to the Tools tab.");
+		return;
+	}
 
-	// Hide all tools first
-	const tools = document.querySelectorAll('.tool-interface');
-	tools.forEach(tool => tool.classList.add('hidden'));
+	showLoading();
 
-	// Show selected tool
-	document.getElementById(toolId).classList.remove('hidden');
+	setTimeout(() => {
+		document.getElementById('tools-grid').style.display = 'none';
+		document.getElementById('backToTools').style.display = 'block';
+
+		const tools = document.querySelectorAll('.tool-interface');
+		tools.forEach(tool => tool.classList.add('hidden'));
+
+		const activeTool = document.getElementById(toolId);
+		activeTool.classList.remove('hidden');
+		activeTool.classList.add('fade-in');
+
+		hideLoading();
+	}, 1000);
 }
+
+
+
 
 // Text Tools
 function textToUpperCase() {
@@ -587,21 +626,21 @@ function resetCountdown() {
 	document.getElementById('countdownInput').value = '';
 }
 function calculateTip() {
-    const bill = parseFloat(document.getElementById("bill").value);
-    const tip = parseFloat(document.getElementById("tip").value);
-    const people = parseInt(document.getElementById("people").value);
+	const bill = parseFloat(document.getElementById("bill").value);
+	const tip = parseFloat(document.getElementById("tip").value);
+	const people = parseInt(document.getElementById("people").value);
 
-    if (isNaN(bill) || isNaN(tip) || isNaN(people) || people <= 0) {
-        document.getElementById("tipResult").textContent = "❌ Please enter valid values.";
-        return;
-    }
+	if (isNaN(bill) || isNaN(tip) || isNaN(people) || people <= 0) {
+		document.getElementById("tipResult").textContent = "❌ Please enter valid values.";
+		return;
+	}
 
-    const tipAmount = bill * (tip / 100);
-    const total = bill + tipAmount;
-    const perPerson = total / people;
+	const tipAmount = bill * (tip / 100);
+	const total = bill + tipAmount;
+	const perPerson = total / people;
 
-    document.getElementById("tipResult").textContent =
-        `Total: ₹${total.toFixed(2)} | Each: ₹${perPerson.toFixed(2)}`;
+	document.getElementById("tipResult").textContent =
+		`Total: ₹${total.toFixed(2)} | Each: ₹${perPerson.toFixed(2)}`;
 }
 
 
@@ -667,3 +706,35 @@ document.getElementById('toolSearch').addEventListener('input', function () {
 		}
 	});
 });
+// Jab scroll kare to button show ya hide hoga
+window.addEventListener('scroll', function () {
+	const btn = document.getElementById('scrollToTop');
+	if (window.scrollY > 200) {
+		btn.style.display = 'block'; // Button dikhao
+	} else {
+		btn.style.display = 'none'; // Button chhupa do
+	}
+});
+
+function showToolMessage(message) {
+	const box = document.getElementById('toolMessage');
+	box.textContent = message;
+	box.classList.remove('hidden');
+
+	// Hide after 3 seconds
+	setTimeout(() => {
+		box.classList.add('hidden');
+	}, 3000);
+}
+
+
+
+function showLoading() {
+	const overlay = document.getElementById('loadingOverlay');
+	overlay.classList.remove('hidden');
+}
+
+function hideLoading() {
+	const overlay = document.getElementById('loadingOverlay');
+	overlay.classList.add('hidden');
+}

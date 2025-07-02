@@ -5,9 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToolBox Pro - Your Ultimate Toolkit</title>
-    <link rel="icon" type="image/x-icon"
-        href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzMzNzNkYyIvPgo8cGF0aCBkPSJNMTAuNSAxMC41SDIxLjVWMTMuNUgxMC41VjEwLjVaTTEwLjUgMTUuNUgyMS41VjE4LjVIMTAuNVYxNS41Wk0xMC41IDIwLjVIMTguNVYyMy41SDEwLjVWMjAuNVoiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+
+
 </head>
 
 <body>
@@ -27,10 +29,16 @@
 
 
     <main>
-        <div class="container" style="margin-top: 100px; text-align: center;">
+        <div class="container sticky-search" style="margin-top: 100px; text-align: center;">
+
             <input type="text" id="toolSearch" placeholder="Search for a tool..."
                 style="padding: 10px; width: 80%; max-width: 400px; border-radius: 10px; border: 1px solid var(--border-color); font-size: 16px;">
         </div>
+        <!-- Message Box -->
+        <!-- Floating Message Box -->
+        <div id="toolMessage" class="message-box hidden">To use this tool, please go to the Tools tab.</div>
+
+
         <!-- Home Section -->
         <section id="home" class="section active">
             <div class="container">
@@ -109,29 +117,29 @@
                         <h3>🗂️ JSON Formatter</h3>
                         <p>Beautify or validate your JSON data.</p>
                     </div>
-                    
 
-                        <!-- Roman Numeral Converter Card -->
-                        <div class="tool-card" onclick="showTool('roman-converter')">
-                            <h3>🔢 Roman Converter</h3>
-                            <p>Convert numbers to Roman numerals.</p>
-                        </div>
 
-                        <!-- Palindrome Checker Card -->
-                        <div class="tool-card" onclick="showTool('palindrome-checker')">
-                            <h3>🔁 Palindrome Checker</h3>
-                            <p>Check if a word or phrase is a palindrome.</p>
-                        </div>
-
-                        <!-- Typing Test Card -->
-                        <div class="tool-card" onclick="showTool('typing-test')">
-                            <h3>⌨️ Typing Speed Test</h3>
-                            <p>Test your typing speed and accuracy.</p>
-                        </div>
+                    <!-- Roman Numeral Converter Card -->
+                    <div class="tool-card" onclick="showTool('roman-converter')">
+                        <h3>🔢 Roman Converter</h3>
+                        <p>Convert numbers to Roman numerals.</p>
                     </div>
 
+                    <!-- Palindrome Checker Card -->
+                    <div class="tool-card" onclick="showTool('palindrome-checker')">
+                        <h3>🔁 Palindrome Checker</h3>
+                        <p>Check if a word or phrase is a palindrome.</p>
+                    </div>
 
+                    <!-- Typing Test Card -->
+                    <div class="tool-card" onclick="showTool('typing-test')">
+                        <h3>⌨️ Typing Speed Test</h3>
+                        <p>Test your typing speed and accuracy.</p>
+                    </div>
                 </div>
+
+
+            </div>
             </div>
         </section>
 
@@ -141,96 +149,7 @@
                 <h2 class="text-center mb-2">All Tools</h2>
 
                 <!-- Tools Selection Grid -->
-                <div class="tools-grid" id="toolsGrid">
-                    <!-- Countdown Timer Card -->
-                    <div class="tool-card" onclick="showTool('countdownTimerTool')">
-                        <h3>⏳ Countdown Timer</h3>
-                        <p>Set a future date and track the time left.</p>
-                    </div>
 
-                    <!-- Tip Calculator Card -->
-                    <div class="tool-card" onclick="showTool('tipCalculatorTool')">
-                        <h3>💰 Tip Calculator</h3>
-                        <p>Calculate tips and split the bill easily.</p>
-                    </div>
-
-                    <div class="tool-card" onclick="showTool('days-difference')">
-                        <h3>📅 Date Difference</h3>
-                        <p>Date Calculator between two difference dates.</p>
-                    </div>
-                    <div class="tool-card" onclick="showTool('age-calculator')">
-                        <h3>🎂 Age Calculator</h3>
-                        <p>Advance Age Calculator , beginner freindly.</p>
-                    </div>
-                    <div class="tool-card" onclick="showTool('alphabet-sorter')">
-                        <h3>🔠 Sort Text</h3>
-                        <p>Sort text easily</p>
-                    </div>
-                    <div class="tool-card" onclick="showTool('line-counter')">
-                        <h3>📋 Line Counter</h3>
-                        <p>Text line counter , just paste text and click on button</p>
-                    </div>
-                    <!-- Number to Words Converter -->
-                    <div class="tool-card" onclick="showTool('number-to-words')">
-                        <h3>🔢 Number to Words</h3>
-                        <p>Convert numbers into English words.</p>
-                    </div>
-                    <!-- Base64 Encoder/Decoder -->
-                    <div class="tool-card" onclick="showTool('text-encryptor')">
-                        <h3>🔒 Text Encrypt/Decrypt</h3>
-                        <p>Base64 encode or decode your text.</p>
-                    </div>
-
-                    <!-- JSON Formatter -->
-                    <div class="tool-card" onclick="showTool('json-formatter')">
-                        <h3>🗂️ JSON Formatter</h3>
-                        <p>Beautify or validate your JSON data.</p>
-                    </div>
-                    <div class="tool-card" onclick="showTool('text-tools')">
-                        <h3>📝 Text Tools</h3>
-                        <p>Text manipulation, word count, case converter, and more</p>
-                    </div>
-                    <div class="tool-card" onclick="showTool('calculator')">
-                        <h3>🧮 Calculator</h3>
-                        <p>Advanced calculator with scientific functions</p>
-                    </div>
-                    <div class="tool-card" onclick="showTool('color-tools')">
-                        <h3>🎨 Color Tools</h3>
-                        <p>Color picker, palette generator, and converter</p>
-                    </div>
-                    <div class="tool-card" onclick="showTool('unit-converter')">
-                        <h3>📏 Unit Converter</h3>
-                        <p>Convert between different units of measurement</p>
-                    </div>
-                    <div class="tool-card" onclick="showTool('qr-generator')">
-                        <h3>📱 QR Code Generator</h3>
-                        <p>Generate QR codes for text, URLs, and more</p>
-                    </div>
-                    <div class="tool-card" onclick="showTool('password-generator')">
-                        <h3>🔐 Password Generator</h3>
-                        <p>Generate secure passwords with custom options</p>
-                    </div>
-                    
-                        <!-- Roman Numeral Converter Card -->
-                        <div class="tool-card" onclick="showTool('roman-converter')">
-                            <h3>🔢 Roman Converter</h3>
-                            <p>Convert numbers to Roman numerals.</p>
-                        </div>
-
-                        <!-- Palindrome Checker Card -->
-                        <div class="tool-card" onclick="showTool('palindrome-checker')">
-                            <h3>🔁 Palindrome Checker</h3>
-                            <p>Check if a word or phrase is a palindrome.</p>
-                        </div>
-
-                        <!-- Typing Test Card -->
-                        <div class="tool-card" onclick="showTool('typing-test')">
-                            <h3>⌨️ Typing Speed Test</h3>
-                            <p>Test your typing speed and accuracy.</p>
-                        </div>
-                    </div>
-
-                </div>
 
                 <!-- Back to Tools Button -->
                 <div class="text-center mt-2" id="backToTools" style="display: none;">
@@ -585,6 +504,10 @@
             </div>
         </section>
     </main>
+    <!-- Add at the end of <body> -->
+    <button id="scrollToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">⬆</button>
+
+
 
     <!-- Footer -->
     <footer>
@@ -639,8 +562,16 @@
             <p>&copy; 2025 ToolBox Pro. All rights reserved. Made with ❤️ for the community</p>
         </div>
     </footer>
+    <div id="loadingOverlay" class="hidden loading-overlay">
+  <div class="dots-loader">
+    <span>.</span><span>.</span><span>.</span>
+  </div>
+</div>
 
-    <script src="script.js"></script>
+
+
 </body>
 
 </html>
+
+
