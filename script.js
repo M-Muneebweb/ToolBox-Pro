@@ -28,6 +28,9 @@ function showSection(sectionId) {
 		const target = document.getElementById(sectionId);
 		target.classList.add('active');
 		target.classList.add('fade-in');
+		targetSection.classList.add('fade-in');
+		setTimeout(() => targetSection.classList.remove('fade-in'), 400);
+
 
 		// tools-grid move
 		const mainToolsGrid = document.getElementById('tools-grid');
@@ -680,6 +683,12 @@ document.getElementById('unitType').addEventListener('change', function () {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function () {
+	setTimeout(() => {
+	const banner = document.getElementById('welcomeBanner');
+	banner.classList.add('show');
+	setTimeout(() => banner.classList.remove('show'), 2500);
+}, 500);
+
 	// Set default theme
 	if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
 		document.body.setAttribute('data-theme', 'dark');
@@ -707,12 +716,12 @@ document.getElementById('toolSearch').addEventListener('input', function () {
 	});
 });
 // Jab scroll kare to button show ya hide hoga
-window.addEventListener('scroll', function () {
+window.addEventListener('scroll', () => {
 	const btn = document.getElementById('scrollToTop');
 	if (window.scrollY > 200) {
-		btn.style.display = 'block'; // Button dikhao
+		btn.classList.add('show');
 	} else {
-		btn.style.display = 'none'; // Button chhupa do
+		btn.classList.remove('show');
 	}
 });
 
@@ -744,3 +753,10 @@ if ('serviceWorker' in navigator) {
     .then(() => console.log('✅ Service Worker registered'))
     .catch(err => console.error('SW registration failed:', err));
 }
+document.getElementById('feedbackBtn').addEventListener('click', () => {
+	window.open('https://forms.gle/XNKxKLsA5z2H9uP1A', '_blank');
+});
+
+document.getElementById('suggestBtn').addEventListener('click', () => {
+	 window.open('https://forms.gle/6qxk7iZgnR1AKrjN6', '_blank');
+	 });

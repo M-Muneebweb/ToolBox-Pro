@@ -29,10 +29,20 @@
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#3373dc">
 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7XXPNG85ZS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'G-7XXPNG85ZS');
+</script>
 </head>
 
 <body>
+    <div id="welcomeBanner" class="hidden">Welcome to ToolBox Pro 👋</div>
+
     <nav>
         <div class="nav-container">
             <div class="logo" onclick="showSection('home')">🛠️ ToolBox Pro</div>
@@ -70,12 +80,14 @@
                 <div class="tools-grid" id="tools-grid">
                     <!-- Countdown Timer Card -->
                     <div class="tool-card" onclick="showTool('countdownTimerTool')">
+                        <span class="tool-badge">Beta</span>
                         <h3>⏳ Countdown Timer</h3>
                         <p>Set a future date and track the time left.</p>
                     </div>
 
                     <!-- Tip Calculator Card -->
                     <div class="tool-card" onclick="showTool('tipCalculatorTool')">
+                        <span class="tool-badge">Beta</span>
                         <h3>💰 Tip Calculator</h3>
                         <p>Calculate tips and split the bill easily.</p>
                     </div>
@@ -105,6 +117,7 @@
                         <p>Advanced calculator with scientific functions</p>
                     </div>
                     <div class="tool-card" onclick="showTool('color-tools')">
+                        <span class="tool-badge">Beta</span>
                         <h3>🎨 Color Tools</h3>
                         <p>Color picker, palette generator, and converter</p>
                     </div>
@@ -113,21 +126,25 @@
                         <p>Convert between different units of measurement</p>
                     </div>
                     <div class="tool-card" onclick="showTool('qr-generator')">
+                        <span class="tool-badge">Beta</span>
                         <h3>📱 QR Code Generator</h3>
                         <p>Generate QR codes for text, URLs, and more</p>
                     </div>
                     <div class="tool-card" onclick="showTool('password-generator')">
+                        <span class="tool-badge">Beta</span>
                         <h3>🔐 Password Generator</h3>
                         <p>Generate secure passwords with custom options</p>
                     </div>
                     <!-- Number to Words Converter -->
                     <div class="tool-card" onclick="showTool('number-to-words')">
+                        <span class="tool-badge">Beta</span>
                         <h3>🔢 Number to Words</h3>
                         <p>Convert numbers into English words.</p>
                     </div>
 
                     <!-- Base64 Encoder/Decoder -->
                     <div class="tool-card" onclick="showTool('text-encryptor')">
+                        <span class="tool-badge">Beta</span>
                         <h3>🔒 Text Encrypt/Decrypt</h3>
                         <p>Base64 encode or decode your text.</p>
                     </div>
@@ -528,7 +545,7 @@
     <button id="scrollToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">⬆</button>
 
 
-
+    <button id="suggestBtn" title="Suggest a Tool">💡 Suggest Tool</button> 
     <!-- Footer -->
     <footer>
         <div class="footer-content">
@@ -575,7 +592,7 @@
                     <li><a href="#">Terms of Service</a></li>
                     <li><a href="#">Report Bug</a></li>
                 </ul>
-            </div>
+           </div>
         </div>
 
         <div class="footer-bottom">
@@ -588,6 +605,7 @@
   </div>
 </div>
 
+<button id="feedbackBtn">💬 Feedback</button>
 
 
 </body>
