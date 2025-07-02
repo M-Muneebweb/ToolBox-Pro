@@ -28,9 +28,8 @@ function showSection(sectionId) {
 		const target = document.getElementById(sectionId);
 		target.classList.add('active');
 		target.classList.add('fade-in');
-		targetSection.classList.add('fade-in');
-		setTimeout(() => targetSection.classList.remove('fade-in'), 400);
-
+		// Remove fade-in after 800ms to match loading overlay
+		setTimeout(() => target.classList.remove('fade-in'), 800);
 
 		// tools-grid move
 		const mainToolsGrid = document.getElementById('tools-grid');
@@ -57,6 +56,8 @@ function showAllTools() {
 		const grid = document.getElementById('tools-grid');
 		grid.style.display = 'grid';
 		grid.classList.add('fade-in');
+		setTimeout(() => grid.classList.remove('fade-in'), 500);
+
 
 		document.getElementById('backToTools').style.display = 'none';
 
@@ -85,6 +86,8 @@ function showTool(toolId) {
 		const activeTool = document.getElementById(toolId);
 		activeTool.classList.remove('hidden');
 		activeTool.classList.add('fade-in');
+		// Remove fade-in after 1000ms to match loading overlay
+		setTimeout(() => activeTool.classList.remove('fade-in'), 1000);
 
 		hideLoading();
 	}, 1000);
@@ -179,11 +182,11 @@ function convertColor() {
 	const hsl = rgbToHsl(r, g, b);
 
 	document.getElementById('colorResult').innerHTML = `
-                <div style="background: ${hex}; width: 100px; height: 100px; border-radius: 10px; margin: 10px auto;"></div>
-                <p><strong>HEX:</strong> ${hex}</p>
-                <p><strong>RGB:</strong> ${rgb}</p>
-                <p><strong>HSL:</strong> hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)</p>
-            `;
+				<div style="background: ${hex}; width: 100px; height: 100px; border-radius: 10px; margin: 10px auto;"></div>
+				<p><strong>HEX:</strong> ${hex}</p>
+				<p><strong>RGB:</strong> ${rgb}</p>
+				<p><strong>HSL:</strong> hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)</p>
+			`;
 }
 
 function rgbToHsl(r, g, b) {
@@ -297,11 +300,11 @@ function generateQR() {
 	// Simple QR code using API
 	const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(text)}`;
 	document.getElementById('qrResult').innerHTML = `
-                <div style="text-align: center;">
-                    <img src="${qrUrl}" alt="QR Code" style="max-width: 200px; border: 1px solid var(--border-color); border-radius: 10px;">
-                    <p style="margin-top: 1rem;">QR Code for: ${text}</p>
-                </div>
-            `;
+				<div style="text-align: center;">
+					<img src="${qrUrl}" alt="QR Code" style="max-width: 200px; border: 1px solid var(--border-color); border-radius: 10px;">
+					<p style="margin-top: 1rem;">QR Code for: ${text}</p>
+				</div>
+			`;
 }
 
 // Password Generator
@@ -329,12 +332,12 @@ function generatePassword() {
 	}
 
 	document.getElementById('passwordResult').innerHTML = `
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <input type="text" value="${password}" readonly style="flex: 1; font-family: monospace; font-size: 14px;">
-                    <button onclick="copyToClipboard('${password}')">Copy</button>
-                </div>
-                <p style="margin-top: 1rem;">Password strength: ${getPasswordStrength(password)}</p>
-            `;
+				<div style="display: flex; align-items: center; gap: 10px;">
+					<input type="text" value="${password}" readonly style="flex: 1; font-family: monospace; font-size: 14px;">
+					<button onclick="copyToClipboard('${password}')">Copy</button>
+				</div>
+				<p style="margin-top: 1rem;">Password strength: ${getPasswordStrength(password)}</p>
+			`;
 }
 
 function getPasswordStrength(password) {
@@ -656,25 +659,25 @@ document.getElementById('unitType').addEventListener('change', function () {
 	let options = '';
 	if (unitType === 'length') {
 		options = `
-                    <option value="meter">Meter</option>
-                    <option value="kilometer">Kilometer</option>
-                    <option value="centimeter">Centimeter</option>
-                    <option value="inch">Inch</option>
-                    <option value="foot">Foot</option>
-                `;
+					<option value="meter">Meter</option>
+					<option value="kilometer">Kilometer</option>
+					<option value="centimeter">Centimeter</option>
+					<option value="inch">Inch</option>
+					<option value="foot">Foot</option>
+				`;
 	} else if (unitType === 'weight') {
 		options = `
-                    <option value="kilogram">Kilogram</option>
-                    <option value="gram">Gram</option>
-                    <option value="pound">Pound</option>
-                    <option value="ounce">Ounce</option>
-                `;
+					<option value="kilogram">Kilogram</option>
+					<option value="gram">Gram</option>
+					<option value="pound">Pound</option>
+					<option value="ounce">Ounce</option>
+				`;
 	} else if (unitType === 'temperature') {
 		options = `
-                    <option value="celsius">Celsius</option>
-                    <option value="fahrenheit">Fahrenheit</option>
-                    <option value="kelvin">Kelvin</option>
-                `;
+					<option value="celsius">Celsius</option>
+					<option value="fahrenheit">Fahrenheit</option>
+					<option value="kelvin">Kelvin</option>
+				`;
 	}
 
 	fromUnit.innerHTML = options;
@@ -750,8 +753,8 @@ function hideLoading() {
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./service-worker.js')
-    .then(() => console.log('✅ Service Worker registered'))
-    .catch(err => console.error('SW registration failed:', err));
+	.then(() => console.log('✅ Service Worker registered'))
+	.catch(err => console.error('SW registration failed:', err));
 }
 document.getElementById('feedbackBtn').addEventListener('click', () => {
 	window.open('https://forms.gle/XNKxKLsA5z2H9uP1A', '_blank');
